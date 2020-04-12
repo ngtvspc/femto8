@@ -19,7 +19,7 @@ function _update()
  if (btn(3)) and heart.y<120 then
   heart.y=heart.y+2
  end
- if (btn(4)) then
+ if (btnp(4)) then
   shoot()
  end
 end
@@ -29,11 +29,22 @@ function _draw()
  t%=30
  rectfill(0,0,127,127,0)
  beat_heart(t)
+ draw_bullets()
+end
+
+function draw_bullets()
+ for bullet in all(bullets) do
+  spr(8,bullet.x,bullet.y)
+  bullet.y-=2
+ end
 end
 
 function shoot()
- local bullet = {}
- spr(1, heart.x, heart.y)
+ local bullet = {
+  x=heart.x,
+  y=heart.y,
+ }
+ add(bullets,bullet)
 end
 
 function beat_heart(t)
