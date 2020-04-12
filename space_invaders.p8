@@ -2,43 +2,7 @@ pico-8 cartridge // http://www.pico-8.com
 version 18
 __lua__
 
-function _init()
- ship={}
- ship.x=64
- ship.y=64
- t=0
-end
-
-function _update()
- if (btn(0)) and ship.x>2 then
-  ship.x=ship.x-2
- end
- if (btn(1)) and ship.x<120 then
-  ship.x=ship.x+2
- end
- if (btn(2)) and ship.y>2 then
-  ship.y=ship.y-2
- end
- if (btn(3)) and ship.y<120 then
-  ship.y=ship.y+2
- end
-end
-
-function _draw()
- t+=1
- t%=30
- rectfill(0,0,127,127,0)
- fly_ship(t)
-end
-
-function fly_ship(t)
- if (t>28) then spr(2,ship.x,ship.y)
- elseif (t>26) then spr(3,ship.x,ship.y)
- elseif (t>24) then spr(4,ship.x,ship.y)
- else spr(1,ship.x,ship.y)
- end
-end
-
+#include space_invaders.lua
 
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
