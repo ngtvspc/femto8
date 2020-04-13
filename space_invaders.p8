@@ -1,7 +1,8 @@
 pico-8 cartridge // http://www.pico-8.com
 version 18
 __lua__
-
+--heart attack
+--by ngtvspc and sylv
 #include space_invaders.lua
 
 __gfx__
