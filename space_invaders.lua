@@ -152,5 +152,4 @@ function beat_heart(t)
  end
 end
 
-_init, _update, _draw = debug.conf(_init, _update, _draw)
-
+_init = debug.replace_game_loop(_update, _draw, _init)
