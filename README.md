@@ -3,7 +3,7 @@ A small Debugging Util for the PICO-8 Virtual Console
 
 ## Usage
 
-See [space_invaders.lua](space_invaders.lua) for a basic working cartridge and usage of `debug`
+Include or paste the contents of [debug.lua](debug.lua) into your PICO-8 cartridge. This will provide an table named `debug` with methods attached to it.
 
 ```
 #include debug.lua
@@ -22,6 +22,9 @@ end
 
 _init = debug.replace_game_loop(_update, _draw, _init)
 ```
+
+See [space_invaders.lua](space_invaders.lua) for a basic working cartridge and usage of `debug`
+
 
 ## Extra API
 
