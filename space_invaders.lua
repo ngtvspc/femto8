@@ -1,3 +1,8 @@
+-- debugger thoughts
+-- current thought to build a "game" that wraps init, update, and draw to allow a user
+-- to set_trace() and step through their game and pause at different locations
+-- menu items to add, continue _init, continue _draw, continue _update, continue _update60
+
 function _init()
  t=0
  heart={}
