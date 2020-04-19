@@ -3,6 +3,8 @@ version 18
 __lua__
 --heart attack
 --by ngtvspc and sylv
+
+#include debug.lua
 #include space_invaders.lua
 
 __gfx__

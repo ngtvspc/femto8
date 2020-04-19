@@ -151,3 +151,6 @@ function beat_heart(t)
  else spr(6,heart.x,heart.y)
  end
 end
+
+_init, _update, _draw = debug.conf(_init, _update, _draw)
+
