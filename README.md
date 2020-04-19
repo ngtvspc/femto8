@@ -28,7 +28,7 @@ See [space_invaders.lua](space_invaders.lua) for a basic working cartridge and u
 
 ## Extra API
 
-`debug.unpack` - a useful little util that allows for something similar to tuple unpacking or returning multiple values from a table
+`debug.unpack` - a useful little util that allows for something similar to tuple unpacking or returning multiple values from a table and mostly [cribbed from this](https://gist.github.com/josefnpat/bfe4aaa5bbb44f572cd0#unpack)
 
 ```
 function multi_return()
