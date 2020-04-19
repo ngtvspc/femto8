@@ -25,6 +25,8 @@ _init = debug.replace_game_loop(_update, _draw, _init)
 
 See [space_invaders.lua](space_invaders.lua) for a basic working cartridge and usage of `debug`
 
+The intended debug flow makes use of the pause menu, logging, and eventually `trace()` to provide an easily configured setup for introspecting variables, the call stack, and step by step execution of your cart.
+
 
 ## Extra API
 
@@ -41,6 +43,11 @@ a, b, c = multi_return()
 
 
 ## Feature Wishlist
+- pretty printer for tables
+- add some configurable logging capability and stack printing, the user flow should be:
+  - set trace
+  - (optionally ask for logged stack)
+  - log values of variables
 - a way to inspect local variables would be stellar
   - (already attempted to read program memory via peek, seem unable to access variable contents via peek)
 - a way to switch to the interpreter and actually evaluate lua
