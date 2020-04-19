@@ -12,13 +12,17 @@ function _debug_conf(...)
  return debug.unpack(r_callbacks)
 end
 
--- a simplistic game loop to replace PICO-8s and support coroutine resumption
+-- a barebones game loop to replace PICO-8s and support coroutine resumption
 function _debug_game_loop(update, draw, init)
+ init = init or function() return end
  local debug_init = function()
-  init()
+  local co_init = _debug_wrap(init)
+  co_init()
   while true do
-   update()
-   draw()
+   local co_update = _debug_wrap(update)
+   local co_draw = _debug_wrap(draw)
+   co_update()
+   co_draw()
    flip()
   end
  end
@@ -29,7 +33,7 @@ function _debug_wrap(func)
  local inner = function()
   local c = cocreate(func)
   local active, err = coresume(c)
-  while active do
+  while active and costatus(c) != "dead" do
    extcmd("pause")
    active, err = coresume(c)
   end
