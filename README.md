@@ -1,5 +1,5 @@
 # FEMTO-8
-A small Debugging Util for the PICO-8 Virtual Console
+A small Debugging Util for the PICO-8 Virtual Console, very much a work in progress
 
 ## Usage
 
