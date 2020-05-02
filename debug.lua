@@ -1,7 +1,10 @@
 -- an attempt at a PICO-8 debugger
 
-function _debug()
+function _debug(config)
 
+ local config = config or {}
+
+ -- depr, just some interesting ideas here like resuming specific routines
  function _debug_conf(...)
   local t_varargs = {...}
   local r_callbacks = {}
@@ -53,11 +56,32 @@ function _debug()
   end
  end
 
+ function _conf_pprint(filename)
+  if filename == nil then
+   return _pprint
+  end
+  function _closure(val)
+   return _pprint(val, filename)
+  end
+  return _closure
+ end
+
  function _pprint(val, filename)
   -- pretty print
-  if type(val) == "table" then
-   printh(val, filename)
+  local function _traverse(val)
+   local _pr_val = ""
+   if type(val) == "table" then
+    _pr_val="{"
+    for key, elem in pairs(val) do
+     _pr_val = _pr_val.." "..key.."=".._traverse(elem)
+    end
+    _pr_val=_pr_val.."}"
+   else
+    _pr_val = tostr(val)
+   end
+   return _pr_val
   end
+  printh(_traverse(val), filename)
  end
 
  -- as follows is the public API
@@ -65,7 +89,8 @@ function _debug()
   set_trace=yield,
   unpack=_unpack,
   replace_game_loop=_debug_game_loop,
-  pprint=_pprint,
+  pprint=_conf_pprint(config.filename),
+  configure=_debug,
  }
 end
 
