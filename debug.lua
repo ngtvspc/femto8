@@ -60,20 +60,38 @@ function _debug(config)
   if filename == nil then
    return _pprint
   end
-  function _closure(val)
-   return _pprint(val, filename)
+  function _closure(val, indent)
+   return _pprint(val, filename, indent)
   end
   return _closure
  end
 
- function _pprint(val, filename)
+ function _pprint(val, filename, indent)
   -- pretty print
-  local function _traverse(val)
+  local _indent_str = ""
+  local _newline = "\n"
+  if indent == nil then
+   indent = 1
+  elseif indent == 0 then
+   _newline = ""
+  end
+  for x=1,indent do
+   _indent_str = _indent_str.." "
+  end
+
+  local function _traverse(val, indent_str)
    local _pr_val = ""
    if type(val) == "table" then
-    _pr_val="{"
+    _pr_val=_newline..indent_str.."{"
+    -- detect first loop to space out "{" character
+    local _first_loop = true
     for key, elem in pairs(val) do
-     _pr_val = _pr_val.." "..key.."=".._traverse(elem)
+     -- first key has an extra character due to the adding of "{"
+     if not _first_loop then
+      _pr_val = _pr_val.." "
+     end
+     _pr_val = _pr_val..key.."=".._traverse(elem, indent_str.._indent_str)..",".._newline..indent_str
+     _first_loop = false
     end
     _pr_val=_pr_val.."}"
    else
@@ -81,7 +99,8 @@ function _debug(config)
    end
    return _pr_val
   end
-  printh(_traverse(val), filename)
+
+  printh(_traverse(val, ""), filename)
  end
 
  -- as follows is the public API
