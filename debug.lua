@@ -1,11 +1,12 @@
 -- an attempt at a PICO-8 debugger
 
-function _debug(config)
+function debug(config)
 
+ -- default config
  local config = config or {}
 
  -- depr, just some interesting ideas here like resuming specific routines
- function _debug_conf(...)
+ local function _debug_conf(...)
   local t_varargs = {...}
   local r_callbacks = {}
   for callback in all(t_varargs) do
@@ -18,7 +19,7 @@ function _debug(config)
  end
 
  -- a barebones game loop to replace PICO-8s and support coroutine resumption
- function _debug_game_loop(update, draw, init)
+ local function _debug_game_loop(update, draw, init)
   init = init or function() return end
   local debug_init = function()
    local co_init = _debug_wrap(init)
@@ -34,7 +35,7 @@ function _debug(config)
   return debug_init
  end
 
- function _debug_wrap(func)
+ local function _debug_wrap(func)
   local inner = function()
    local c = cocreate(func)
    local active, err = coresume(c)
@@ -46,7 +47,7 @@ function _debug(config)
   return inner
  end
 
- function _unpack(t)
+ local function _unpack(t)
   if #t == 0 then
    return
   else
@@ -56,17 +57,7 @@ function _debug(config)
   end
  end
 
- function _conf_pprint(filename)
-  if filename == nil then
-   return _pprint
-  end
-  function _closure(val, indent)
-   return _pprint(val, filename, indent)
-  end
-  return _closure
- end
-
- function _pprint(val, filename, indent)
+ local function _pprint(val, filename, indent)
   -- pretty print
   local _indent_str = ""
   local _newline = "\n"
@@ -103,14 +94,24 @@ function _debug(config)
   printh(_traverse(val, ""), filename)
  end
 
+ local function _conf_pprint(filename)
+  if filename == nil then
+   return _pprint
+  end
+  local function _closure(val, indent)
+   return _pprint(val, filename, indent)
+  end
+  return _closure
+ end
+
  -- as follows is the public API
  return {
   set_trace=yield,
   unpack=_unpack,
   replace_game_loop=_debug_game_loop,
   pprint=_conf_pprint(config.filename),
-  configure=_debug,
+  configure=debug,
  }
 end
 
-debug = _debug()
+debug = debug()
