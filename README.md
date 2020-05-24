@@ -55,10 +55,15 @@ debug.pprint({key='val'})
 `debug.pprint val filename indent` - pretty prints `val` to the specified `filename` either in the function call or the one configured for the debug library using the specified `indent` for indenting the nested structures. Both `filename` and `indent` are optional.
 
 ```
-debug.pprint('hello') -- uses builtin printh and prints to host operating system console
-debug.pprint('writing to audit.p8l', 'audit', 3) -- pretty print to filename audit.p8l with indent of 3 spaces
+ -- uses builtin printh and prints to host operating system console
+debug.pprint('hello')
 
-debug = debug.configure({filename='log'}) -- configures logger to print to log.p8l
+-- pretty print to filename audit.p8l with indent of 3 spaces
+debug.pprint('writing to audit.p8l', 'audit', 3)
+
+-- configures logger to print to log.p8l
+debug = debug.configure({filename='log'})
+
 debug.pprint('writing to file log.p8l')
 
 nested_structure = {
@@ -67,8 +72,12 @@ nested_structure = {
  three={'hi', 'hello'}
  four=4,
 }
-debug..print(nested_structure, 2) -- pretty prints nested_structure with an indent of two spaces
-debug..print(nested_structure, 0) -- pretty prints nested_structure with no spaces, should be copy-pastable directly to pico8 console
+
+-- pretty prints nested_structure with an indent of two spaces
+debug..print(nested_structure, 2)
+-- pretty prints nested_structure with no spaces
+-- should be copy-pastable directly to pico8 console
+debug..print(nested_structure, 0)
 ```
 
 
