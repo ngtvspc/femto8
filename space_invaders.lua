@@ -12,6 +12,10 @@ function _init()
  bombs={}
  enemies={}
  _spawn_enemies()
+ -- configures log filename
+ debug = debug.configure({filename='log'})
+ -- prints contents of heart table to filename 'log'
+ debug.pprint(heart)
 end
 
 function _spawn_enemies()
