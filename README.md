@@ -30,7 +30,7 @@ The intended debug flow makes use of the pause menu, logging, and eventually `tr
 
 ## Extra API
 
-`debug.unpack` - a useful little util that allows for something similar to tuple unpacking or returning multiple values from a table and mostly [cribbed from this](https://gist.github.com/josefnpat/bfe4aaa5bbb44f572cd0#unpack)
+`debug.unpack [table]` - allows for something similar to tuple unpacking or returning multiple values from a table and mostly [cribbed from this](https://gist.github.com/josefnpat/bfe4aaa5bbb44f572cd0#unpack)
 
 ```
 function multi_return()
@@ -41,16 +41,46 @@ end
 a, b, c = multi_return()
 ```
 
+`debug.configure [configure table]` - given a table of configuration values, configures the debug library
+
+Supported Configure Table Options:
+- `filename` - sets filename printed to by debug library
+
+```
+-- setting the global debug to the return value of configure() is required
+debug = debug.configure({filename='my_log_file'})
+debug.pprint({key='val'})
+```
+
+`debug.pprint val filename indent` - pretty prints `val` to the specified `filename` either in the function call or the one configured for the debug library using the specified `indent` for indenting the nested structures. Both `filename` and `indent` are optional.
+
+```
+debug.pprint('hello') -- uses builtin printh and prints to host operating system console
+debug.pprint('writing to audit.p8l', 'audit', 3) -- pretty print to filename audit.p8l with indent of 3 spaces
+
+debug = debug.configure({filename='log'}) -- configures logger to print to log.p8l
+debug.pprint('writing to file log.p8l')
+
+nested_structure = {
+ one=1,
+ two=2,
+ three={'hi', 'hello'}
+ four=4,
+}
+debug..print(nested_structure, 2) -- pretty prints nested_structure with an indent of two spaces
+debug..print(nested_structure, 0) -- pretty prints nested_structure with no spaces, should be copy-pastable directly to pico8 console
+```
+
 
 ## Feature Wishlist
-- pretty printer for tables
-- add some configurable logging capability and stack printing, the user flow should be:
+- [x] pretty printer for tables
+- [] add some configurable logging capability and stack printing, the user flow should be:
   - set trace
   - (optionally ask for logged stack)
   - log values of variables
-- a way to inspect local variables would be stellar
+- [] a way to inspect local variables would be stellar
   - (already attempted to read program memory via peek, seem unable to access variable contents via peek)
-- a way to switch to the interpreter and actually evaluate lua
+- [] a way to switch to the interpreter and actually evaluate lua
   - (unfortunately doesn't seem possible given limited capabilties of PICO-8)
 
 ## Architecture

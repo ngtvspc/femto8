@@ -15,7 +15,21 @@ function debug(config)
    menuitem(#r_callbacks+1, "conf function "..tostr(#r_callbacks), function() wrapped() end)
   end
   menuitem(1, "_stop", function() stop() end)
+  -- should convert this to class based architecture?
+  -- debug in this context is referring to a global debug object, not self
   return debug.unpack(r_callbacks)
+ end
+
+ local function _debug_wrap(func)
+  local inner = function()
+   local c = cocreate(func)
+   local active, err = coresume(c)
+   while active and costatus(c) != "dead" do
+    extcmd("pause")
+    active, err = coresume(c)
+   end
+  end
+  return inner
  end
 
  -- a barebones game loop to replace PICO-8s and support coroutine resumption
@@ -33,18 +47,6 @@ function debug(config)
    end
   end
   return debug_init
- end
-
- local function _debug_wrap(func)
-  local inner = function()
-   local c = cocreate(func)
-   local active, err = coresume(c)
-   while active and costatus(c) != "dead" do
-    extcmd("pause")
-    active, err = coresume(c)
-   end
-  end
-  return inner
  end
 
  local function _unpack(t)
