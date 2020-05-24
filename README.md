@@ -82,14 +82,13 @@ debug..print(nested_structure, 0)
 
 
 ## Feature Wishlist
-- [x] pretty printer for tables
-- [] add some configurable logging capability and stack printing, the user flow should be:
+- add some configurable logging capability and stack printing, the user flow should be:
   - set trace
   - (optionally ask for logged stack)
   - log values of variables
-- [] a way to inspect local variables would be stellar
+- a way to inspect local variables would be stellar
   - (already attempted to read program memory via peek, seem unable to access variable contents via peek)
-- [] a way to switch to the interpreter and actually evaluate lua
+- a way to switch to the interpreter and actually evaluate lua
   - (unfortunately doesn't seem possible given limited capabilties of PICO-8)
 
 ## Architecture
